@@ -2,6 +2,7 @@
 
 .main {
   background-color: #fef2e8;
+  padding-bottom: 30px;
 }
 * {
   margin: 0;
@@ -26,15 +27,9 @@
   background: #fff;
   padding-top: 10px;
   padding-bottom: 10px;
+  z-index: 999;
 }
 
-.title h1 {
-  font-weight: 800;
-  font-size: x-large;
-}
-.title {
-  margin-left: 30px;
-}
 .input-form {
   display: flex;
   border: 2px solid black;
@@ -79,7 +74,6 @@
 }
 
 .button-primary {
-  flex: 1;
   padding: 10px;
   border: 2px solid black;
   outline: none;
@@ -90,10 +84,77 @@
   -moz-box-shadow: 4px 3px 0px 0px rgba(20, 20, 20, 1);
   box-shadow: 4px 3px 0px 0px rgba(20, 20, 20, 1);
   transition: all 0.3s ease;
+  width: 90px;
+  height: auto;
 }
 
 .button-primary:hover {
   box-shadow: none;
   transform: translate(3px, 3px);
   transition: all 0.3s ease;
+}
+
+.button-container {
+  display: flex;
+  gap: 20px;
+}
+
+.list-item-container {
+  display: flex;
+  width: 100%;
+  gap: 40px;
+}
+.colobalck {
+  background-color: violet;
+}
+
+.list-item {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  flex-direction: column;
+  border: solid 1px black;
+  background-color: #fff;
+  margin-left: 10px;
+  margin-right: 10px;
+  width: 50%;
+  gap: 40px;
+  border-radius: 10px;
+  padding-bottom: 40px;
+}
+
+.item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  border-radius: 10px;
+  width: 80%;
+  height: 30vh;
+  transition: all 0.3s ease;
+  -webkit-box-shadow: 7px 4px 0px 0px rgba(20, 20, 20, 1);
+  -moz-box-shadow: 7px 4px 0px 0px rgba(20, 20, 20, 1);
+  box-shadow: 7px 7px 0px 0px rgba(20, 20, 20, 1);
+  border: solid 3px black;
+  flex-direction: column;
+  background-color: #fef2e8;
+  gap: 20px;
+}
+.item:hover {
+  box-shadow: none;
+  transform: translate(3px, 3px);
+  transition: all 0.3s ease;
+}
+
+.item p {
+  font-size: small;
+}
+
+.segment-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: solid 5px black;
 }

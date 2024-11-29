@@ -1,6 +1,28 @@
 import React from "react";
 
 class Header extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      search: "",
+    };
+  }
+
+  handleSearchChange = (event) => {
+    this.setState({ search: event.target.value });
+    event.preventDefault();
+    if (this.props.onSearchSubmit) {
+      this.props.onSearchSubmit(this.state.search);
+    }
+  };
+
+  handleSubmit = (event) => {
+    event.preventDefault();
+    if (this.props.onSearchSubmit) {
+      this.props.onSearchSubmit(this.state.search);
+    }
+  };
+
   render() {
     return (
       <div className="header-container">
@@ -14,9 +36,15 @@ class Header extends React.Component {
               placeholder="search notes"
               name="search"
               id="search"
+              value={this.state.search}
+              onChange={this.handleSearchChange}
             />
-            <button className="submit-button" type="submit">
-              submit
+            <button
+              onClick={this.handleSubmit}
+              className="submit-button"
+              type="submit"
+            >
+              Search
             </button>
           </form>
         </div>
