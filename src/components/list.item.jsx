@@ -1,38 +1,38 @@
 import React from "react";
-import { getInitialData } from "../utils";
+import { showFormattedDate } from "../utils";
 import Button from "./button";
 
 class Main extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: getInitialData(),
+      notes: this.props.notes, // Perubahan ini untuk menginisialisasi state dengan props notes yang diterima
     };
   }
 
   handleDelete = (id) => {
-    const newData = this.state.data.filter((item) => item.id !== id);
-    this.setState({ data: newData });
+    const newData = this.state.notes.filter((item) => item.id !== id);
+    this.setState({ notes: newData }); // Perubahan ini untuk mengupdate state dengan nama yang sesuai
   };
 
   handleIsArcived = (id) => {
-    const newData = this.state.data.map((item) => {
+    const newData = this.state.notes.map((item) => {
       if (item.id === id) {
         return { ...item, archived: true };
       }
       return item;
     });
-    this.setState({ data: newData });
+    this.setState({ notes: newData }); // Perubahan ini untuk mengupdate state dengan nama yang sesuai
   };
 
   handleUnarcived = (id) => {
-    const newData = this.state.data.map((item) => {
+    const newData = this.state.notes.map((item) => {
       if (item.id === id) {
         return { ...item, archived: false };
       }
       return item;
     });
-    this.setState({ data: newData });
+    this.setState({ notes: newData }); // Perubahan ini untuk mengupdate state dengan nama yang sesuai
   };
 
   render() {
@@ -43,7 +43,7 @@ class Main extends React.Component {
             <h1>catatan</h1>
           </div>
 
-          {this.state.data
+          {this.state.notes
             .filter(
               (item) =>
                 !item.archived &&
@@ -54,11 +54,11 @@ class Main extends React.Component {
             .map((item) => (
               <div className="item" key={item.id}>
                 <h2>{item.title}</h2>
+                <p className="date">{showFormattedDate(item.createdAt)}</p>
                 <p>{item.body}</p>
-                <p>{item.archived ? "true" : "false"}</p>
                 <div className="button-container">
                   <Button
-                    name="delete"
+                    name="Delete"
                     onClick={() => this.handleDelete(item.id)}
                   />
                   <Button
@@ -68,12 +68,17 @@ class Main extends React.Component {
                 </div>
               </div>
             ))}
+          {this.state.notes.filter(
+            (item) =>
+              !item.archived &&
+              item.title.toLowerCase().includes(this.props.search.toLowerCase())
+          ).length === 0 && <p>Tidak ada catatan</p>}
         </div>
         <div className="list-item">
           <div className="segment-container">
             <h1>Archived</h1>
           </div>
-          {this.state.data
+          {this.state.notes
             .filter(
               (item) =>
                 item.archived &&
@@ -88,7 +93,7 @@ class Main extends React.Component {
                 <p>{item.archived ? "true" : "false"}</p>
                 <div className="button-container">
                   <Button
-                    name="delete"
+                    name="Hapus"
                     onClick={() => this.handleDelete(item.id)}
                   />
                   <Button
@@ -98,6 +103,11 @@ class Main extends React.Component {
                 </div>
               </div>
             ))}
+          {this.state.notes.filter(
+            (item) =>
+              item.archived &&
+              item.title.toLowerCase().includes(this.props.search.toLowerCase())
+          ).length === 0 && <p>Tidak ada catatan yang diarsipkan</p>}
         </div>
       </div>
     );
