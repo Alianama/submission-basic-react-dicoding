@@ -6,46 +6,33 @@ class Add extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: "",
       title: "",
       body: "",
-      createdAt: "",
       archived: false,
       isModalOpen: false,
+      titleLimit: 50,
     };
-    this.onTitlesChanged = this.onTitlesChanged.bind(this);
-    this.onBodyChanged = this.onBodyChanged.bind(this);
-    this.onArchivedChanged = this.onArchivedChanged.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
   }
 
-  onTitlesChanged(event) {
-    this.setState(() => {
-      return {
-        title: event.target.value,
-      };
-    });
-  }
+  onTitlesChanged = (event) => {
+    if (event.target.value.length <= this.state.titleLimit) {
+      this.setState({ title: event.target.value });
+    }
+  };
 
-  onBodyChanged(event) {
-    this.setState(() => {
-      return {
-        body: event.target.value,
-      };
-    });
-  }
+  onBodyChanged = (event) => this.setState({ body: event.target.value });
+  onArchivedChanged = (event) =>
+    this.setState({ archived: event.target.checked });
 
-  onArchivedChanged(event) {
-    this.setState(() => {
-      return {
-        archived: event.target.checked,
-      };
-    });
-  }
-  onSubmit(event) {
+  onSubmit = (event) => {
     event.preventDefault();
-    this.props.addNotes(this.state);
-  }
+    this.props.addNotes({
+      title: this.state.title,
+      body: this.state.body,
+      archived: this.state.archived,
+    });
+    this.setState({ title: "", body: "", archived: false, isModalOpen: false });
+  };
 
   modalIsOpen = () => {
     this.setState({ isModalOpen: !this.state.isModalOpen });
@@ -63,6 +50,9 @@ class Add extends React.Component {
         {this.state.isModalOpen && (
           <div className="modal-overlay">
             <form className="add-form-container" onSubmit={this.onSubmit}>
+              <p className="limit-countdown">
+                limit title {this.state.titleLimit - this.state.title.length}
+              </p>
               <input
                 onChange={this.onTitlesChanged}
                 type="text"
@@ -70,6 +60,7 @@ class Add extends React.Component {
                 id="title"
                 placeholder="Title"
                 value={this.state.title}
+                required
               />
               <input
                 onChange={this.onBodyChanged}
@@ -78,6 +69,7 @@ class Add extends React.Component {
                 id="body"
                 placeholder="Body"
                 value={this.state.body}
+                required
               />
               <div className="archive-btn-container">
                 <input
@@ -86,13 +78,14 @@ class Add extends React.Component {
                   id="isArchived"
                   onChange={this.onArchivedChanged}
                   checked={this.state.archived}
+                  s
                 />
                 <p>Archived?</p>
               </div>
               <button onClick={this.modalIsOpen} className="close-modal-btn">
                 X
               </button>
-              <Button name={"Add"} onClick={this.onSubmit} />
+              <Button name={"Add"} type={"submit"} />
             </form>
           </div>
         )}

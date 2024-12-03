@@ -1,4 +1,5 @@
 import React from "react";
+import SearchInput from "./search.Input";
 
 class Header extends React.Component {
   constructor(props) {
@@ -31,21 +32,11 @@ class Header extends React.Component {
         </div>
         <div className="form-search-container">
           <form className="input-form" action="submit">
-            <input
-              type="text"
-              placeholder="search notes"
-              name="search"
-              id="search"
+            <SearchInput
               value={this.state.search}
               onChange={this.handleSearchChange}
+              onSubmit={this.handleSubmit}
             />
-            <button
-              onClick={this.handleSubmit}
-              className="submit-button"
-              type="submit"
-            >
-              Search
-            </button>
           </form>
         </div>
       </div>
